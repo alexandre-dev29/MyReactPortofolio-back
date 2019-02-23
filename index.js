@@ -34,7 +34,7 @@ app.use("/user", userRoute);
 app.use("/works", worksRoutes);
 app.use("/skills", skillsRoute);
 app.use("/experiences", experienceRoutes);
-app.use("/domaine", domaineRoutes);
+app.use("/domaines", domaineRoutes);
 
 
 app.listen(PORT, () => console.log("listening on port " + PORT));

@@ -24,6 +24,8 @@ const userRoute = require("./Routes/UserRoute");
 const skillsRoute = require("./Routes/SkillsRoutes");
 const worksRoutes = require("./Routes/WorksRoutes");
 const mainRoutes = require("./Routes/mainRoute");
+const experienceRoutes = require("./Routes/ExperienceRoute");
+const domaineRoutes = require("./Routes/DomaineRoutes");
 
       
 
@@ -31,6 +33,8 @@ app.use("/", mainRoutes);
 app.use("/user", userRoute);
 app.use("/works", worksRoutes);
 app.use("/skills", skillsRoute);
+app.use("/experiences", experienceRoutes);
+app.use("/domaine", domaineRoutes);
 
 
 app.listen(PORT, () => console.log("listening on port " + PORT));

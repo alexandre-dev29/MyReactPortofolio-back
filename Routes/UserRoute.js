@@ -37,6 +37,22 @@ router.post('/login', (req, res) => {
        }
     });
 });
+router.get('/user_data', (req, res) => {
+    const email = req.body.user.user_email;
+    
+    const user_model = mongoose.model('users');
+
+    user_model.find(
+        {user_email : email}, 
+        "user_firstname user_lastname user_nickname user_birth user_description user_titles user_email", 
+        (error, user) => {
+            if(user.length > 0){
+                res.send({response: "success", user_data: user[0]})
+            }else{
+                res.send({response: "error", message: "There is no data for these information"})
+            }
+        })
+})
 
 /*router.post('/newUser', (req, res) => {
     const user_model = mongoose.model('users');

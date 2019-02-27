@@ -28,7 +28,7 @@ router.get('/get_domaines', (req, res) => {
     user_model.find({user_email: email}, (error, result) => {
         if(result.length > 0){
             domaine_model.find((error, all_domaines) => {
-                res.send(returnCustom("voici tout les domaines", all_domaines));
+                res.send(returnCustom("This is all domaines", all_domaines));
             })
         }else{
            res.send( returnError("Invalid Identification"));

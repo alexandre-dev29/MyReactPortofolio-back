@@ -6,7 +6,7 @@ var workSchema = new Schema({
     work_title: String,
     work_category: String,
     work_year: String,
-    workclient: {type: String, default: 'Personal'},
+    work_client: {type: String, default: 'Personal'},
     work_description: {type: String},
     work_images: {type: Array},
     work_cover: String

@@ -71,11 +71,11 @@ router.put('/update_domaines', (req, res) => {
     const email = req.body.user.user_email;
     const domaines = req.body.domaines;
 
-    user_model.find({user_email: email}, "user_id", (error, result) => {
+    user_model.find({user_email: email}, "_id", (error, result) => {
         if(result.length > 0){
             domaines.forEach(currentDomaine => {
                 domaine_model.updateOne(
-                    {domaine_id: currentDomaine.domaine_id},
+                    {_id: currentDomaine._id},
                     {
                         domaine_name: currentDomaine.domaine_name,
                         domaine_percent: currentDomaine.domaine_percent,
@@ -105,7 +105,7 @@ router.delete('/delete_domaines', (req, res) => {
     user_model.find({user_email: email}, "user_id", (error, result) => {
         if(result.length > 0){
             domaines.forEach(currentDomaine => {
-                domaine_model.deleteOne({domaine_id: currentDomaine.domaine_id},
+                domaine_model.deleteOne({_id: currentDomaine._id},
                     (err) => {
                         if(err){
                             res.send(returnError("there was an error"))

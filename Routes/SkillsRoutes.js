@@ -31,7 +31,7 @@ router.get("/get_skills", (req, res) => {
 
 });
 
-router.post("add_skills", (req, res) => {
+router.post("/add_skills", (req, res) => {
   const email = req.body.user.user_email;
   const skills = req.body.skills;
 
@@ -53,14 +53,14 @@ router.post("add_skills", (req, res) => {
 
 });
 
-router.put("update_skills", (req, res) => {
+router.put("/update_skills", (req, res) => {
   const email = req.body.user.user_email;
   const skills = req.body.skills;
 
   user_model.find({ user_email: email}, (error, result) => {
     if(result.length > 0){
       skills.forEach(currentSkill => {
-        skill_model.updateOne({skill_id: currentSkill.skill_id}, 
+        skill_model.updateOne({_id: currentSkill._id}, 
           {
             skill_name: currentSkill.skill_name,
             skill_percent: currentSkill.skill_percent,
@@ -76,20 +76,20 @@ router.put("update_skills", (req, res) => {
 
 });
 
-router.delete("delete_skills", (req, res) => {
+router.delete("/delete_skills", (req, res) => {
   const email = req.body.user.user_email;
   const skills = req.body.skills;
 
   user_model.find({ user_email: email}, (error, result) => {
     if(result.length > 0){
       skills.forEach(currentSkill => {
-        skill_model.deleteOne({skill_id: currentSkill.skill_id},
+        skill_model.deleteOne({_id: currentSkill._id},
             (err) => {
                 if(err){
                     res.send(returnError("there was an error"))
                 }
             })
-    })
+     })
       res.send(returnSuccess("All these skills has been succcessfully deleted"))
     }else{
       res.send(returnError("Invalid Identification"));

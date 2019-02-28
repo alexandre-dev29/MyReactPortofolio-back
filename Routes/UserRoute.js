@@ -54,25 +54,26 @@ router.get('/user_data', (req, res) => {
         })
 })
 
-/*router.post('/newUser', (req, res) => {
+router.post('/newUser', (req, res) => {
     const user_model = mongoose.model('users');
+    const current_user = req.body.newUser;
 
     const newUser = new user_model({
-        user_firstname: "Axel",
-        user_lastname: "Mwenze",
-        user_nickname: "Alexandre",
-        user_birth: "29/08/1995",
-        user_description: "I am a web developper",
-        user_titles: ["Web developper", "graphique designer"],
-        user_email: "axel.business29@gmail.com",
-        user_password: bcrypt.hashSync("patterson")
+        user_firstname: current_user.user_firstname,
+        user_lastname: current_user.user_lastname,
+        user_nickname: current_user.user_nickname,
+        user_birth: current_user.user_birth,
+        user_description: current_user.user_description,
+        user_titles: current_user.user_titles,
+        user_email: current_user.user_email,
+        user_password: bcrypt.hashSync(current_user.user_password)
     });
     newUser.save().then((error, result) => {
         res.send(JSON.stringify({
             response: "success",
             message: "The user has been succesfully singup"
-        }))
-    })
-});*/
+        }));
+    });
+});
 
 module.exports = router;

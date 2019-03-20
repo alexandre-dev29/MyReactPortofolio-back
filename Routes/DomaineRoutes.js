@@ -2,7 +2,11 @@ const express = require("express");
 const mongoose = require('mongoose')
 
 const router = express.Router();
-const {returnError, returnSuccess, returnCustom} = require('../Utils/respnseUtils')
+const {
+    returnError,
+    returnSuccess,
+    returnCustom
+} = require('../Utils/respnseUtils')
 
 require('../Models/Domaines');
 require('../Models/Users');
@@ -14,7 +18,7 @@ const user_model = mongoose.model('users');
 /**GET request for the home page */
 
 router.get("/", (req, res) => {
-  res.send("Voici la page d'accueil");
+    res.send("Voici la page d'accueil");
 });
 
 
@@ -25,13 +29,15 @@ router.get("/", (req, res) => {
 router.get('/get_domaines', (req, res) => {
     const email = req.body.user.user_email;
 
-    user_model.find({user_email: email}, (error, result) => {
-        if(result.length > 0){
+    user_model.find({
+        user_email: email
+    }, (error, result) => {
+        if (result.length > 0) {
             domaine_model.find((error, all_domaines) => {
                 res.send(returnCustom("This is all domaines", all_domaines));
             })
-        }else{
-           res.send( returnError("Invalid Identification"));
+        } else {
+            res.send(returnError("Invalid Identification"));
         }
     })
 });
@@ -45,18 +51,20 @@ router.post('/add_domaines', (req, res) => {
     const email = req.body.user.user_email;
     const domaines = req.body.domaines;
 
-    user_model.find({user_email: email}, "user_id", (error, result) => {
-        if(result.length > 0){
+    user_model.find({
+        user_email: email
+    }, "user_id", (error, result) => {
+        if (result.length > 0) {
             domaines.forEach(currentDomaine => {
                 const newDomaine = new domaine_model({
                     domaine_name: currentDomaine.domaine_name,
-                    domaine_percent: currentDomaine.domaine_percent,
-                    domaine_category: currentDomaine.domaine_category
+                    domaine_icon: currentDomaine.domaine_icon,
+                    domaine_color: currentDomaine.domaine_color
                 });
                 newDomaine.save();
             });
             res.send(returnSuccess("All your Domaine has been saved successfully"));
-        }else{
+        } else {
             res.send(returnError("Invalid Indentification"));
         }
     })
@@ -71,23 +79,25 @@ router.put('/update_domaines', (req, res) => {
     const email = req.body.user.user_email;
     const domaines = req.body.domaines;
 
-    user_model.find({user_email: email}, "_id", (error, result) => {
-        if(result.length > 0){
+    user_model.find({
+        user_email: email
+    }, "_id", (error, result) => {
+        if (result.length > 0) {
             domaines.forEach(currentDomaine => {
-                domaine_model.updateOne(
-                    {_id: currentDomaine._id},
-                    {
+                domaine_model.updateOne({
+                        _id: currentDomaine._id
+                    }, {
                         domaine_name: currentDomaine.domaine_name,
-                        domaine_percent: currentDomaine.domaine_percent,
-                        domaine_category: currentDomaine.domaine_category
+                        domaine_icon: currentDomaine.domaine_icon,
+                        domaine_color: currentDomaine.domaine_color
                     },
-                    (error , retour) => {
+                    (error, retour) => {
 
                     }
-                    )
+                )
             });
             res.send(returnSuccess("All Your Domaine has been updated successfully"))
-        }else{
+        } else {
             res.send(returnError("Invalid Indentification"));
         }
     })
@@ -102,12 +112,16 @@ router.delete('/delete_domaines', (req, res) => {
     const domaines = req.body.domaines;
 
 
-    user_model.find({user_email: email}, "user_id", (error, result) => {
-        if(result.length > 0){
+    user_model.find({
+        user_email: email
+    }, "user_id", (error, result) => {
+        if (result.length > 0) {
             domaines.forEach(currentDomaine => {
-                domaine_model.deleteOne({_id: currentDomaine._id},
+                domaine_model.deleteOne({
+                        _id: currentDomaine._id
+                    },
                     (err) => {
-                        if(err){
+                        if (err) {
                             res.send(returnError("there was an error"))
                         }
                     })

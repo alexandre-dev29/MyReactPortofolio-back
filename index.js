@@ -6,13 +6,13 @@ const app = express();//creating the express variable
 const mongoose = require('mongoose');
 
 //loading authorization check
-//const isAuthorize = require("./Utils/Auth");
+const isAuthorize = require("./Auth/Auth");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, key_auth");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, api_key");
     res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
     next();
 });
@@ -29,12 +29,12 @@ const domaineRoutes = require("./Routes/DomaineRoutes");
 
       
 
-app.use("/", mainRoutes);
-app.use("/user", userRoute);
-app.use("/works", worksRoutes);
-app.use("/skills", skillsRoute);
-app.use("/experiences", experienceRoutes);
-app.use("/domaines", domaineRoutes);
+app.use("/", isAuthorize,mainRoutes);
+app.use("/user", isAuthorize,userRoute);
+app.use("/works", isAuthorize,worksRoutes);
+app.use("/skills", isAuthorize,skillsRoute);
+app.use("/experiences", isAuthorize,experienceRoutes);
+app.use("/domaines", isAuthorize,domaineRoutes);
 
 
 app.listen(PORT, () => console.log("listening on port " + PORT));

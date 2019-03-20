@@ -2,10 +2,7 @@ const express = require("express");
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-node');
 
-
-const isAuthorize = require('../Utils/Auth') 
 require('../Models/Users')
-
 
 
 const router = express.Router();

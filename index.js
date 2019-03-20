@@ -29,7 +29,7 @@ const domaineRoutes = require("./Routes/DomaineRoutes");
 
       
 
-app.use("/", isAuthorize,mainRoutes);
+app.use("/",mainRoutes);
 app.use("/user", isAuthorize,userRoute);
 app.use("/works", isAuthorize,worksRoutes);
 app.use("/skills", isAuthorize,skillsRoute);

@@ -32,7 +32,7 @@ const domaineRoutes = require("./Routes/DomaineRoutes");
 app.use(express.static('public'));
 app.use("/",mainRoutes);
 app.use("/user", isAuthorize,userRoute);
-app.use("/works", isAuthorize,worksRoutes);
+app.use("/works",worksRoutes);
 app.use("/skills", isAuthorize,skillsRoute);
 app.use("/experiences", isAuthorize,experienceRoutes);
 app.use("/domaines", isAuthorize,domaineRoutes);

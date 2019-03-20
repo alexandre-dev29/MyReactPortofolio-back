@@ -9,7 +9,6 @@ var userSchema = new Schema({
     user_birth: String,
     user_description: String,
     user_extend:String,
-    user_titles: {type: Array},
     user_email: String,
     user_password: String
 });

@@ -3,7 +3,7 @@
 const API_KEY = process.env.API_KEY;
 //this method check the header and see if the request is valid for security issues
 const isAuthorize = (req, res, next) => {
-  if (req.headers.key_auth && req.headers.key_auth === API_KEY) {
+  if (req.headers.api_key && req.headers.api_key === API_KEY) {
     next();
   } else {
     res.send(

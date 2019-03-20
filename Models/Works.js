@@ -8,8 +8,9 @@ var workSchema = new Schema({
     work_year: String,
     work_client: {type: String, default: 'Personal'},
     work_description: {type: String},
-    work_images: {type: Array},
-    work_cover: String
+    work_images: String,
+    work_lightdesc: String,
+    work_link: String
 });
 
 mongoose.model('works', workSchema);

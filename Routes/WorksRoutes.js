@@ -1,5 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const multer = require("multer");
+const path = require("path");
+const crypto = require("crypto");
+
 
 const {returnError, returnSuccess, returnCustom} = require('../Utils/respnseUtils')
 
@@ -8,6 +12,18 @@ require('../Models/Users');
 
 const work_model = mongoose.model('works');
 const user_model = mongoose.model('users');
+
+const storage = multer.diskStorage({
+  destination: 'public/images',
+  filename: function (req, file, cb) {
+    crypto.pseudoRandomBytes(16, function (err, raw) {
+      if (err) return cb(err)
+
+      cb(null, raw.toString('hex') + path.extname(file.originalname))
+    })
+  }
+})
+const uploadpath = multer({storage: storage});
 
 const router = express.Router();
 
@@ -31,25 +47,25 @@ router.get("/get_works", (req, res) => {
   })
 });
 
-router.post("/add_works", (req, res) => {
-  const email = req.body.user.user_email;
-  const works = req.body.works;
+router.post("/add_works", uploadpath.single("work_image"), (req, res) => {
+  const email = req.body.user_email;
+  const works = req.body;
+  const filepath = req.file;
 
   user_model.find({user_email: email}, (error, result) => {
     if (result.length > 0) {
-      works.forEach(currentWork => {
-        const newWork = new work_model({
-          work_title: currentWork.work_title,
-          work_description: currentWork.work_description,
-          work_category: currentWork.work_category,
-          work_year: currentWork.work_year,
-          work_client: currentWork.work_client,
-          work_images: currentWork.work_images,
-          work_cover: currentWork.work_cover
-        });
-        newWork.save();
+      const newWork = new work_model({
+          work_title: works.work_title,
+          work_category: works.work_category,
+          work_year: works.work_year,
+          work_client: works.work_client,
+          work_images: "images/"+filepath.filename,
+          work_lightdesc: works.work_lightdesc,
+          work_link: works.work_link,
+          work_description: works.work_description
       });
-      res.send(returnSuccess("Your work has been saved successfully"));
+      newWork.save();
+      res.send( returnSuccess("This work has been saved successfully"));
     }else{
       res.send( returnError("Invalid Identification"));
     }

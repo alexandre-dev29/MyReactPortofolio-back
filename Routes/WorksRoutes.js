@@ -34,8 +34,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/get_works", (req, res) => {
-  const email = req.body.user.user_email;
-
+  const email = req.query.user_email;
   user_model.find({user_email: email}, (error, result) => {
     if (result.length > 0) {
       work_model.find((err, all_data) => {

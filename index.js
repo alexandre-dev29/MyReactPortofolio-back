@@ -35,6 +35,7 @@ app.use("/works", isAuthorize,worksRoutes);
 app.use("/skills", isAuthorize,skillsRoute);
 app.use("/experiences", isAuthorize,experienceRoutes);
 app.use("/domaines", isAuthorize,domaineRoutes);
+app.use('/static', express.static('public'));
 
 
 app.listen(PORT, () => console.log("listening on port " + PORT));

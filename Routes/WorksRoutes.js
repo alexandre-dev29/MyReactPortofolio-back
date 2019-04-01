@@ -96,7 +96,7 @@ router.put("/update_works", (req, res) => {
   })
 });
 
-router.put("/delete_works", (req, res) => {
+router.delete("/delete_works", (req, res) => {
   const email = req.body.user.user_email;
   const works = req.body.works;
 
